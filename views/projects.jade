@@ -1,0 +1,35 @@
+extend layout.jade
+
+block content
+  .row
+    each project, idx in projects
+      if !project.deleted
+        .col-sm-6
+          .box.box-primary
+            .box-header
+              h3.box-title= project.name
+            form(method="POST",target="_self")
+              .box-body
+                dl.dl-horizontal
+                  dt 项目描述
+                  dd= project.desc
+                dl.dl-horizontal
+                  dt 排期
+                  dd
+                    ul
+                      each stage in project.stages
+                        li= stage.name + ' ' + stage.time
+                dl.dl-horizontal
+                  dt 状态
+                  dd= project.status
+              .box-footer
+                a.btn.btn-primary(href="/edit?id=#{idx}") edit
+                a.btn.btn-primary(href="/clone?id=#{idx}") clone
+                a.btn.btn-primary(href="/delete?id=#{idx}") delete
+  .row
+    .col-sm-12
+      a.btn.btn-primary(href="/add") add project
+
+prepend scripts
+  script(type="text/javascript", src="/share/form_view.js")
+  script(type="text/javascript", src="/js/runtime.js")

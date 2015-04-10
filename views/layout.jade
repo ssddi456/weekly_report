@@ -1,0 +1,71 @@
+include mixins.jade
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    title Weekly Report 
+    meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',name='viewport')
+    <!-- Theme style -->
+    link(href="/css/twitter-bootstrap/3.2.0/css/bootstrap.min.css",rel="stylesheet",type="text/css")
+    link(href="/css/font-awesome/4.1.0/css/font-awesome.min.css",rel="stylesheet",type="text/css")
+    link(href="/css/ionicons/1.5.2/css/ionicons.min.css",rel="stylesheet",type="text/css")
+    link(href="/css/AdminLTE.css",rel="stylesheet",type="text/css")
+    link(rel="stylesheet",href="/plugins/datepicker/datepicker3.css")
+  body.skin-blue
+    // header logo: style can be found in header.less
+    header.header
+      a.logo(href='index.html')
+        // Add the class icon to your logo image or logo icon to add the margining
+        | Weekly Report
+      // Header Navbar: style can be found in header.less
+      nav.navbar.navbar-static-top(role='navigation')
+        // Sidebar toggle button
+        a.navbar-btn.sidebar-toggle(href='#', data-toggle='offcanvas', role='button')
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        .navbar-right
+          ul.nav.navbar-nav    
+    .wrapper.row-offcanvas.row-offcanvas-left
+      // Left side column. contains the logo and sidebar
+      aside.left-side.sidebar-offcanvas
+        // sidebar: style can be found in sidebar.less
+        section.sidebar
+          ul.sidebar-menu
+            each item in side_menu
+              if item.items
+                - var is_active =is_selected_menu(item) ? 'active' : '';
+                li(class="treeview #{is_active}")
+                  a(href='#')
+                    i.fa.fa-bar-chart-o
+                    span= item.name
+                    i.fa.fa-angle-left.pull-right
+                  ul.treeview-menu(style="#{is_active && 'display:block'}")
+                    each sub_item in item.items
+                      - var is_active = is_selected_menu(sub_item) ? 'active' : '';
+                      li(class="#{is_active}")
+                        a(href='#{sub_item.href}')
+                          i.fa.fa-angle-double-right
+                          = sub_item.name
+              else
+                li.active
+                  a(href='#{item.href}')
+                    i.fa.fa-dashboard
+                    span= item.name
+
+      aside.right-side
+        section.content-header
+          h1
+            = title
+            if sub_title
+              small= sub_title
+        section.content
+          block content
+
+    block scripts
+      script(src='/js/jquery/2.1.1/jquery.js')
+      script(type="text/javascript", src="/css/twitter-bootstrap/3.2.0/js/bootstrap.min.js")
+      script(src="/plugins/datepicker/bootstrap-datepicker.js")
+      +typed_edit_setting_tree_script()
+      script(src='/js/app.js')

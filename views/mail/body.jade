@@ -1,0 +1,84 @@
+table.MsoNormalTable(border='0', cellspacing='0', cellpadding='0', style='margin-left:7.75pt;border-collapse:collapse;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm')
+  tr(style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:23.75pt')
+    td(width='742', colspan='7', style='width:556.55pt;border:solid black 1.0pt;background:#92CDDC;padding:0cm 5.4pt 0cm 5.4pt;height:23.75pt')
+      p.MsoNormal
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 一、项目进度
+  tr(style='mso-yfti-irow:1;height:12.8pt')
+    td(width='90', valign='top', style='width:67.5pt;border:solid black 1.0pt;border-top:none;background:#DAEEF3;padding:0cm 5.4pt 0cm 5.4pt;height:12.8pt')
+      p.MsoNormal(align='center', style='text-align:center')
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 项目名称
+    td(width='149', valign='top', style='width:111.75pt;border-top:none;border-left:none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:#DAEEF3;padding:0cm 5.4pt 0cm 5.4pt;height:12.8pt')
+      p.MsoNormal(align='center', style='text-align:center')
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 项目背景
+    td(width='101', valign='top', style='width:111.75pt;border-top:none;border-left:none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:#DAEEF3;padding:0cm 5.4pt 0cm 5.4pt;height:12.8pt')
+      p.MsoNormal(align='center', style='text-align:center')
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 关键时间点
+    td(width='80', valign='top', style='width:59.65pt;border-top:none;border-left:none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:#DAEEF3;padding:0cm 5.4pt 0cm 5.4pt;height:12.8pt')
+      p.MsoNormal(align='center', style='text-align:center')
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 项目负责人
+    td(width='123', valign='top', style='width:92.55pt;border-top:none;border-left:none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;background:#DAEEF3;padding:0cm 5.4pt 0cm 5.4pt;height:12.8pt')
+      p.MsoNormal(align='center', style='text-align:center')
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 项目状态和风险
+    td(width='81', valign='top', style='width:60.9pt;border:solid black 1.0pt;background:#DAEEF3;padding:0cm 5.4pt 0cm 5.4pt;height:12.8pt')
+      p.MsoNormal(align='center', style='text-align:center')
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 本周工作
+    td(width='118', valign='top', style='width:88.6pt;border:solid black 1.0pt;background:#DAEEF3;padding:0cm 5.4pt 0cm 5.4pt;height:12.8pt')
+      p.MsoNormal(align='center', style='text-align:center')
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 下周工作
+  each project in projects
+    tr(style='mso-yfti-irow:2;height:44.45pt')
+      td(width='90', valign='top', style='width:67.5pt;border:solid black 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:44.45pt')
+        p.MsoNormal
+          span(style='font-family:"微软雅黑","sans-serif";color:#1F497D')
+            = project.name
+      td(width='149', valign='top', style='width:111.75pt;border:solid black 1pt;padding:0cm 5.4pt 0cm 5.4pt;height:44.45pt')
+        p.MsoNormal
+          span(style='font-family:"微软雅黑","sans-serif";color:#1F497D')
+            = project.desc
+      td(width='101', valign='top', style='width:111.75pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:44.45pt')
+        p.MsoNormal(align='left', style='text-align:left')
+          span(style='font-size:12.0pt;font-family:宋体;color:#1F497D') 
+            each stage in project.stages 
+              | #{stage.name + ' ' + stage.time}
+              br
+      td(width='80', valign='top', style='width:59.65pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:44.45pt')
+        p.MsoNormal(align='left', style='text-align:left')
+          span(style='font-size:        12.0pt;font-family:宋体;color:#1F497D')
+            | #{project.managers.join(',')}
+      td(width='123', valign='top', style='width:92.55pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:44.45pt')
+        p.MsoNormal
+          span(style='font-family:"微软雅黑","sans-serif";color:#1F497D')
+            = project.status
+      td(width='81', valign='top', style='width:60.9pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:44.45pt')
+        p.MsoNormal
+          span(style='font-size:12.0pt;font-family:宋体;color:#1F497D')
+            = project.current_week_work
+      td(width='118', valign='top', style='width:88.6pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:44.45pt')
+        p.MsoNormal
+          span(style='font-size:12.0pt;font-family:宋体;color:#1F497D')
+            = project.next_week_work
+  tr(style='mso-yfti-irow:3;height:24.05pt')
+    td(width='742', colspan='7', style='width:556.55pt;border:solid black 1.0pt;    border-top:none;background:#92CDDC;padding:0cm 5.4pt 0cm 5.4pt;height:24.05pt')
+      p.MsoNormal
+        b(style='font-family:"微软雅黑","sans-serif"') 
+          | 二、技术成长
+  tr(style='mso-yfti-irow:4;height:23.05pt')
+    td(width='742', colspan='7', valign='top', style='width:556.55pt;border:solid black 1.0pt;    border-top:none;padding:0cm 5.4pt 0cm 5.4pt')
+      p.MsoNormal
+        span(style='color:#1F497D')
+          |   
+  tr(style='mso-yfti-irow:5;height:23.05pt')
+    td(width='742', colspan='7', style='width:556.55pt;border:solid black 1.0pt;border-top:none;background:#92CDDC;padding:0cm 5.4pt 0cm 5.4pt;height:23.05pt')
+      p.MsoNormal
+        b(style='font-family:"微软雅黑","sans-serif"')
+          | 三、碰到的问题/建议反馈/需要的支持
+  tr(style='mso-yfti-irow:6;mso-yfti-lastrow:yes;height:45.85pt')
+    td(width='742', colspan='7', valign='top', style='width:556.55pt;border:solid black 1.0pt;border-top:none;padding:0cm 5.4pt 0cm 5.4pt;height:45.85pt')

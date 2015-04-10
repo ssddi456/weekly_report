@@ -1,0 +1,15 @@
+extend layout.jade
+
+block content
+  .box.box-primary
+    .box-header
+      h3.box-title
+    form(method="POST",target="_self",action="#{post_url}")
+      .box-body
+        +typed_edit_setting_tree(projects)
+      .box-footer
+        button.btn.btn-primary(type="submit") submit
+
+prepend scripts
+  script(type="text/javascript", src="/share/form_view.js")
+  script(type="text/javascript", src="/js/runtime.js")

@@ -1,0 +1,89 @@
+
+mixin setting_tree_item( val, item_name, parent_type )
+  .form-group
+    if parent_type != 'list'
+      label.form-label
+        = val.name
+    if val.type == 'enum'
+      select.form-control(name="#{item_name}")
+        each en in val.enums
+          if val.value == en
+            option(selected)= en
+          else
+            option= en
+    else if val.type == 'date'
+      input.form-control(type='text',
+                         value="#{val.value}",
+                         name="#{item_name}",
+                         data-provide="datepicker",
+                         data-dateFormat="#{val.format}")
+    else 
+      input.form-control(type='text',value="#{val.value}",name="#{item_name}")
+
+mixin setting_tree_list_item( parent_type )
+  if parent_type == 'list'
+    .row
+      .col-md-11
+        block
+      .col-md-1
+        a.btn.btn-default.list-remove 
+          i.fa.fa-remove
+  else
+    block
+
+mixin typed_edit_setting_tree( settings, prefix, parent_type )
+  each val in settings.items
+    - var item_name = prefix ? prefix + '[' + val.name + ']' : val.name;
+    if !val.items
+      +setting_tree_list_item(parent_type)
+        +setting_tree_item(val, item_name, parent_type)
+    else
+      +setting_tree_list_item(parent_type)
+        fieldset.form
+          legend= item_name
+          if val.type == 'list'
+            .list-body(data-list-prefix="#{item_name}")
+              +typed_edit_setting_tree(val, item_name, val.type )
+            .list-footer
+              a.btn.btn-default.list-add(href="###") add
+              textarea(type="text/json",style="display:none;")
+                | !{JSON.stringify(val.scheme)}
+          else
+            +typed_edit_setting_tree(val, item_name, val.type )
+
+mixin typed_edit_setting_tree_script()
+  script.
+    (function(){
+      var form_view_tpl_func = !{form_view_tpl_func};
+    $(document)
+      .on('click','.list-remove',function(){
+        $(this).parents('.row').first().remove();
+      })
+      .on('click','.list-add',function(){
+        var footer = 
+          $(this).parents('.list-footer').first();
+        var body = footer.siblings('.list-body');
+        var prefix = body.attr('data-list-prefix');
+        var last_input = body.find('[name^="'+prefix+'"]').last();
+        var last_idx  = last_input.attr('name');
+        last_idx = (last_idx || '').replace(prefix,'');
+        last_idx = last_idx.length 
+                     ? Number(last_idx.match(/^\[(\d+)/)[1])
+                     : 0;
+
+        var item = footer
+                    .find('textarea[type="text/json"]')
+                    .text();
+
+        item = JSON.parse(item);
+        item = form_view_tpl_func({ 
+                  settings : { 
+                    items : [form_view.form.create_item( 
+                              prefix + '[' +( last_idx + 1 )+ ']', 
+                              item)]
+                  },
+                  parent_type : 'list'
+                });
+        body.append(item);
+      });
+    }())
